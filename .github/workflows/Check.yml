@@ -31,7 +31,8 @@ jobs:
             FILE=cdr.csv
             if test -f "$FILE"; then
              curl "https://stooq.pl/q/l/?s=cdr&f=sd2t2ohlcv&h&e=csv" --output cdrn.csv
-             tail cdrn.csv -n 1 >>"$FILE"
+             tail cdrn.csv -n 1 >>"$FILE" 
+             rm -f cdrn.csv
             else
             curl "https://stooq.pl/q/l/?s=cdr&f=sd2t2ohlcv&h&e=csv" --output cdr.csv
             fi
