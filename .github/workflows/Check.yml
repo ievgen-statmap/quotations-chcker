@@ -28,9 +28,14 @@ jobs:
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: |-
-            mkdir -p data
-            rm -f data/*
-            curl "https://stooq.pl/q/l/?s=cdr&f=sd2t2ohlcv&h&e=csv" --output data/cdr.csv
+            FILE=cdr.csv
+            if test -f "$FILE"; then
+             curl "https://stooq.pl/q/l/?s=cdr&f=sd2t2ohlcv&h&e=csv" --output cdrn.csv
+             tail cdrn.csv -n 1 >>"$FILE"
+            else
+            curl "https://stooq.pl/q/l/?s=cdr&f=sd2t2ohlcv&h&e=csv" --output cdr.csv
+            fi
+            
             
       - name: Commit and push if changed
         run: |-
